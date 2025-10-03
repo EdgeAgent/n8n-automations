@@ -1,0 +1,54 @@
+
+{
+  "nodes": [
+    {
+      "parameters": {
+        "interval": 86400
+      },
+      "name": "Schedule Trigger (Daily)",
+      "type": "n8n-nodes-base.interval",
+      "typeVersion": 1,
+      "position": [0, 300]
+    },
+    {
+      "parameters": {
+        "url": "https://api.openweathermap.org/data/2.5/weather?q=London&appid=YOUR_API_KEY",
+        "options": {}
+      },
+      "name": "HTTP Request (Weather API)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 1,
+      "position": [250, 300]
+    },
+    {
+      "parameters": {
+        "fromEmail": "your_email@example.com",
+        "toEmail": "recipient@example.com",
+        "subject": "Daily Weather Forecast for {{ $json.name }}",
+        "text": "Today's weather: {{ $json.weather[0].description }}. Temperature: {{ $json.main.temp }}°C.",
+        "options": {}
+      },
+      "name": "Send Email",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 1,
+      "position": [500, 300]
+    }
+  ],
+  "connections": {
+    "Schedule Trigger (Daily)": {
+      "output": [
+        [
+          { "node": "HTTP Request (Weather API)", "index": 0 }
+        ]
+      ]
+    },
+    "HTTP Request (Weather API)": {
+      "output": [
+        [
+          { "node": "Send Email", "index": 0 }
+        ]
+      ]
+    }
+  }
+}
+

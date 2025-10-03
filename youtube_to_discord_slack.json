@@ -1,0 +1,36 @@
+
+{
+  "nodes": [
+    {
+      "parameters": {
+        "channelId": "UC_x5XG1OV2P6uZZ5FSM9Ttw",
+        "options": {}
+      },
+      "name": "YouTube Trigger",
+      "type": "n8n-nodes-base.youTubeTrigger",
+      "typeVersion": 1,
+      "position": [250, 300]
+    },
+    {
+      "parameters": {
+        "webhookUrl": "",
+        "text": "New YouTube video from {{ $json.channelTitle }}: {{ $json.title }} - {{ $json.link }}",
+        "options": {}
+      },
+      "name": "Discord/Slack Notification",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [500, 300]
+    }
+  ],
+  "connections": {
+    "YouTube Trigger": {
+      "output": [
+        [
+          { "node": "Discord/Slack Notification", "index": 0 }
+        ]
+      ]
+    }
+  }
+}
+

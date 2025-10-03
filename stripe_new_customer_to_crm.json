@@ -1,0 +1,48 @@
+
+{
+  "nodes": [
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "options": {}
+      },
+      "name": "Stripe Trigger (New Customer)",
+      "type": "n8n-nodes-base.stripeTrigger",
+      "typeVersion": 1,
+      "position": [250, 300]
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "operation": "create",
+        "entity": "contact",
+        "options": {
+          "properties": [
+            {
+              "property": "email",
+              "value": "={{ $json.email }}"
+            },
+            {
+              "property": "firstname",
+              "value": "={{ $json.name }}"
+            }
+          ]
+        }
+      },
+      "name": "HubSpot Create Contact",
+      "type": "n8n-nodes-base.hubspot",
+      "typeVersion": 1,
+      "position": [500, 300]
+    }
+  ],
+  "connections": {
+    "Stripe Trigger (New Customer)": {
+      "output": [
+        [
+          { "node": "HubSpot Create Contact", "index": 0 }
+        ]
+      ]
+    }
+  }
+}
+

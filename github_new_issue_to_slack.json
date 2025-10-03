@@ -1,0 +1,36 @@
+
+{
+  "nodes": [
+    {
+      "parameters": {
+        "repository": "owner/repo",
+        "options": {}
+      },
+      "name": "GitHub Trigger (New Issue)",
+      "type": "n8n-nodes-base.githubTrigger",
+      "typeVersion": 1,
+      "position": [250, 300]
+    },
+    {
+      "parameters": {
+        "webhookUrl": "",
+        "text": "New GitHub Issue in {{ $json.repository.full_name }}: {{ $json.issue.title }} - {{ $json.issue.html_url }}",
+        "options": {}
+      },
+      "name": "Slack Notification",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 1,
+      "position": [500, 300]
+    }
+  ],
+  "connections": {
+    "GitHub Trigger (New Issue)": {
+      "output": [
+        [
+          { "node": "Slack Notification", "index": 0 }
+        ]
+      ]
+    }
+  }
+}
+

@@ -1,0 +1,53 @@
+
+{
+  "nodes": [
+    {
+      "parameters": {
+        "interval": 86400
+      },
+      "name": "Schedule Trigger (Daily)",
+      "type": "n8n-nodes-base.interval",
+      "typeVersion": 1,
+      "position": [0, 300]
+    },
+    {
+      "parameters": {
+        "command": "pg_dump -Fc -h localhost -U postgres mydb > /tmp/mydb.bak",
+        "options": {}
+      },
+      "name": "Execute Command (DB Backup)",
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [250, 300]
+    },
+    {
+      "parameters": {
+        "bucketName": "your-s3-bucket",
+        "fileName": "mydb-backup-{{ $now }}.bak",
+        "binaryData": true,
+        "options": {}
+      },
+      "name": "S3 Upload",
+      "type": "n8n-nodes-base.awsS3",
+      "typeVersion": 1,
+      "position": [500, 300]
+    }
+  ],
+  "connections": {
+    "Schedule Trigger (Daily)": {
+      "output": [
+        [
+          { "node": "Execute Command (DB Backup)", "index": 0 }
+        ]
+      ]
+    },
+    "Execute Command (DB Backup)": {
+      "output": [
+        [
+          { "node": "S3 Upload", "index": 0 }
+        ]
+      ]
+    }
+  }
+}
+

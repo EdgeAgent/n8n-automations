@@ -1,0 +1,40 @@
+
+{
+  "nodes": [
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "spreadsheetId": "",
+        "sheetName": "Sheet1",
+        "options": {}
+      },
+      "name": "Google Sheets Trigger (New Row)",
+      "type": "n8n-nodes-base.googleSheetsTrigger",
+      "typeVersion": 1,
+      "position": [250, 300]
+    },
+    {
+      "parameters": {
+        "boardId": "",
+        "listId": "",
+        "name": "New Task: {{ $json.columnA }}",
+        "description": "Details: {{ $json.columnB }}",
+        "options": {}
+      },
+      "name": "Create Trello Card",
+      "type": "n8n-nodes-base.trello",
+      "typeVersion": 1,
+      "position": [500, 300]
+    }
+  ],
+  "connections": {
+    "Google Sheets Trigger (New Row)": {
+      "output": [
+        [
+          { "node": "Create Trello Card", "index": 0 }
+        ]
+      ]
+    }
+  }
+}
+

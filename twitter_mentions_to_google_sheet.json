@@ -1,0 +1,41 @@
+
+{
+  "nodes": [
+    {
+      "parameters": {
+        "query": "@your_handle OR keyword",
+        "options": {}
+      },
+      "name": "Twitter Trigger (Mentions)",
+      "type": "n8n-nodes-base.twitterTrigger",
+      "typeVersion": 1,
+      "position": [250, 300]
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "operation": "append",
+        "spreadsheetId": "",
+        "sheetName": "Sheet1",
+        "valueInputOption": "RAW",
+        "options": {
+          "values": "=[[\"{{ $json.user.screen_name }}\", \"{{ $json.text }}\", \"{{ $json.created_at }}\"]]"
+        }
+      },
+      "name": "Google Sheet Append",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 1,
+      "position": [500, 300]
+    }
+  ],
+  "connections": {
+    "Twitter Trigger (Mentions)": {
+      "output": [
+        [
+          { "node": "Google Sheet Append", "index": 0 }
+        ]
+      ]
+    }
+  }
+}
+

@@ -1,0 +1,42 @@
+
+{
+  "nodes": [
+    {
+      "parameters": {
+        "shop": "your-shopify-store.myshopify.com",
+        "webhookId": "",
+        "options": {}
+      },
+      "name": "Shopify Trigger (New Order)",
+      "type": "n8n-nodes-base.shopifyTrigger",
+      "typeVersion": 1,
+      "position": [250, 300]
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "operation": "append",
+        "spreadsheetId": "",
+        "sheetName": "Orders",
+        "valueInputOption": "RAW",
+        "options": {
+          "values": "=[[\"{{ $json.order_number }}\", \"{{ $json.customer.first_name }} {{ $json.customer.last_name }}\", \"{{ $json.total_price }}\", \"{{ $json.created_at }}\"]]"
+        }
+      },
+      "name": "Google Sheet Append",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 1,
+      "position": [500, 300]
+    }
+  ],
+  "connections": {
+    "Shopify Trigger (New Order)": {
+      "output": [
+        [
+          { "node": "Google Sheet Append", "index": 0 }
+        ]
+      ]
+    }
+  }
+}
+
