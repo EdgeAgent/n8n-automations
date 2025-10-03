@@ -1,0 +1,106 @@
+
+{
+  "nodes": [
+    {
+      "parameters": {
+        "url": "https://your-ecommerce-platform.com/api/orders/new",
+        "method": "GET",
+        "options": {
+          "headers": [
+            {
+              "name": "Authorization",
+              "value": "Bearer YOUR_ECOMMERCE_API_KEY"
+            }
+          ]
+        }
+      },
+      "name": "New Order Trigger",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 1,
+      "position": [240, 300]
+    },
+    {
+      "parameters": {
+        "values": [
+          {
+            "name": "orderId",
+            "value": "{{ $json.id }}"
+          },
+          {
+            "name": "customerEmail",
+            "value": "{{ $json.customer.email }}"
+          },
+          {
+            "name": "items",
+            "value": "{{ $json.line_items }}"
+          }
+        ]
+      },
+      "name": "Extract Order Data",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 1,
+      "position": [480, 300]
+    },
+    {
+      "parameters": {
+        "url": "https://your-ecommerce-platform.com/api/inventory/update",
+        "method": "POST",
+        "body": "{\"order_id\": \"{{ $json.orderId }}\", \"items\": \"{{ $json.items }}\"}",
+        "jsonBody": true,
+        "options": {
+          "headers": [
+            {
+              "name": "Authorization",
+              "value": "Bearer YOUR_ECOMMERCE_API_KEY"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        }
+      },
+      "name": "Update Inventory",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 1,
+      "position": [720, 200]
+    },
+    {
+      "parameters": {
+        "to": "{{ $json.customerEmail }}",
+        "subject": "Your Order #{{ $json.orderId }} Has Shipped!",
+        "text": "Hi there,\n\nGood news! Your order #{{ $json.orderId }} has shipped and is on its way.\n\nThank you for your purchase!\n\nBest regards,\nYour Store Team",
+        "options": {}
+      },
+      "name": "Send Shipping Notification",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 1,
+      "position": [720, 400]
+    }
+  ],
+  "connections": {
+    "New Order Trigger": [
+      [
+        {
+          "node": "Extract Order Data",
+          "index": 0
+        }
+      ]
+    ],
+    "Extract Order Data": [
+      [
+        {
+          "node": "Update Inventory",
+          "index": 0
+        }
+      ],
+      [
+        {
+          "node": "Send Shipping Notification",
+          "index": 0
+        }
+      ]
+    ]
+  }
+}
+

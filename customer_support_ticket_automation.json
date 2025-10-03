@@ -1,0 +1,130 @@
+
+{
+  "nodes": [
+    {
+      "parameters": {
+        "emailAddress": "your-support-email@example.com",
+        "options": {}
+      },
+      "name": "Email Trigger",
+      "type": "n8n-nodes-base.emailReceive",
+      "typeVersion": 1,
+      "position": [240, 300]
+    },
+    {
+      "parameters": {
+        "values": [
+          {
+            "name": "subject",
+            "value": "{{ $json.subject }}"
+          },
+          {
+            "name": "body",
+            "value": "{{ $json.text }}"
+          },
+          {
+            "name": "from",
+            "value": "{{ $json.from[0].address }}"
+          }
+        ]
+      },
+      "name": "Extract Email Data",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 1,
+      "position": [480, 300]
+    },
+    {
+      "parameters": {
+        "url": "https://your-ticketing-system.com/api/tickets",
+        "method": "POST",
+        "body": "{\"subject\": \"{{ $json.subject }}\", \"description\": \"{{ $json.body }}\", \"requester\": \"{{ $json.from }}\"}",
+        "jsonBody": true,
+        "options": {
+          "headers": [
+            {
+              "name": "Authorization",
+              "value": "Bearer YOUR_TICKETING_SYSTEM_API_KEY"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        }
+      },
+      "name": "Create Ticket",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 1,
+      "position": [720, 200]
+    },
+    {
+      "parameters": {
+        "to": "{{ $json.from }}",
+        "subject": "Re: {{ $json.subject }}",
+        "text": "Hi there,\n\nThank you for contacting us. We have received your request and created a ticket for you. We will get back to you shortly.\n\nBest regards,\nSupport Team",
+        "options": {}
+      },
+      "name": "Send Confirmation Email",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 1,
+      "position": [720, 400]
+    },
+    {
+      "parameters": {
+        "url": "https://your-ticketing-system.com/api/tickets/{{ $json.id }}/assign",
+        "method": "PUT",
+        "body": "{\"assignee_id\": \"TEAM_MEMBER_ID\"}",
+        "jsonBody": true,
+        "options": {
+          "headers": [
+            {
+              "name": "Authorization",
+              "value": "Bearer YOUR_TICKETING_SYSTEM_API_KEY"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        }
+      },
+      "name": "Assign Ticket",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 1,
+      "position": [960, 200]
+    }
+  ],
+  "connections": {
+    "Email Trigger": [
+      [
+        {
+          "node": "Extract Email Data",
+          "index": 0
+        }
+      ]
+    ],
+    "Extract Email Data": [
+      [
+        {
+          "node": "Create Ticket",
+          "index": 0
+        }
+      ],
+      [
+        {
+          "node": "Send Confirmation Email",
+          "index": 0
+        }
+      ]
+    ],
+    "Create Ticket": [
+      [
+        {
+          "node": "Assign Ticket",
+          "index": 0
+        }
+      ]
+    ]
+  }
+}
+

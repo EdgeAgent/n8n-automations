@@ -1,0 +1,134 @@
+
+{
+  "nodes": [
+    {
+      "parameters": {
+        "url": "https://example.com/rss-feed",
+        "options": {}
+      },
+      "name": "RSS Feed Reader",
+      "type": "n8n-nodes-base.rssFeedRead",
+      "typeVersion": 1,
+      "position": [240, 300]
+    },
+    {
+      "parameters": {
+        "url": "https://api.openai.com/v1/engines/davinci-codex/completions",
+        "method": "POST",
+        "body": "{\"prompt\": \"Generate a social media post from this article: {{ $json.item.title }} - {{ $json.item.link }}\", \"max_tokens\": 60}",
+        "jsonBody": true,
+        "options": {
+          "headers": [
+            {
+              "name": "Authorization",
+              "value": "Bearer YOUR_OPENAI_API_KEY"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        }
+      },
+      "name": "AI Post Generator",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 1,
+      "position": [480, 300]
+    },
+    {
+      "parameters": {
+        "values": [
+          {
+            "name": "postContent",
+            "value": "{{ $json.choices[0].text }}"
+          }
+        ]
+      },
+      "name": "Format Post Content",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 1,
+      "position": [720, 300]
+    },
+    {
+      "parameters": {
+        "url": "https://api.twitter.com/2/tweets",
+        "method": "POST",
+        "body": "{\"text\": \"{{ $json.postContent }}\"}",
+        "jsonBody": true,
+        "options": {
+          "headers": [
+            {
+              "name": "Authorization",
+              "value": "Bearer YOUR_TWITTER_BEARER_TOKEN"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        }
+      },
+      "name": "Post to Twitter",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 1,
+      "position": [960, 200]
+    },
+    {
+      "parameters": {
+        "url": "https://graph.facebook.com/v12.0/me/feed",
+        "method": "POST",
+        "body": "{\"message\": \"{{ $json.postContent }}\"}",
+        "jsonBody": true,
+        "options": {
+          "headers": [
+            {
+              "name": "Authorization",
+              "value": "Bearer YOUR_FACEBOOK_ACCESS_TOKEN"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        }
+      },
+      "name": "Post to Facebook",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 1,
+      "position": [960, 400]
+    }
+  ],
+  "connections": {
+    "RSS Feed Reader": [
+      [
+        {
+          "node": "AI Post Generator",
+          "index": 0
+        }
+      ]
+    ],
+    "AI Post Generator": [
+      [
+        {
+          "node": "Format Post Content",
+          "index": 0
+        }
+      ]
+    ],
+    "Format Post Content": [
+      [
+        {
+          "node": "Post to Twitter",
+          "index": 0
+        }
+      ],
+      [
+        {
+          "node": "Post to Facebook",
+          "index": 0
+        }
+      ]
+    ]
+  }
+}
+
