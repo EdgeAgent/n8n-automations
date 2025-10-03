@@ -1,0 +1,36 @@
+
+{
+  "nodes": [
+    {
+      "parameters": {
+        "url": "https://www.example.com/rss",
+        "options": {}
+      },
+      "name": "RSS Feed Read",
+      "type": "n8n-nodes-base.rssFeed",
+      "typeVersion": 1,
+      "position": [250, 300]
+    },
+    {
+      "parameters": {
+        "operation": "post",
+        "message": "New article: {{ $json.title }} - {{ $json.link }}",
+        "options": {}
+      },
+      "name": "Social Media Post",
+      "type": "n8n-nodes-base.socialMedia",
+      "typeVersion": 1,
+      "position": [500, 300]
+    }
+  ],
+  "connections": {
+    "RSS Feed Read": {
+      "output": [
+        [
+          { "node": "Social Media Post", "index": 0 }
+        ]
+      ]
+    }
+  }
+}
+

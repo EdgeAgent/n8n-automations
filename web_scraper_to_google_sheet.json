@@ -1,0 +1,57 @@
+
+{
+  "nodes": [
+    {
+      "parameters": {
+        "url": "https://www.example.com",
+        "options": {}
+      },
+      "name": "HTTP Request (Web Scraper)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 1,
+      "position": [250, 300]
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "operation": "append",
+        "spreadsheetId": "",
+        "sheetName": "Sheet1",
+        "valueInputOption": "RAW",
+        "options": {
+          "values": "={{ $json.data }}"
+        }
+      },
+      "name": "Google Sheet Append",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 1,
+      "position": [500, 300]
+    },
+    {
+      "parameters": {
+        "interval": 3600
+      },
+      "name": "Schedule Trigger",
+      "type": "n8n-nodes-base.interval",
+      "typeVersion": 1,
+      "position": [0, 300]
+    }
+  ],
+  "connections": {
+    "Schedule Trigger": {
+      "output": [
+        [
+          { "node": "HTTP Request (Web Scraper)", "index": 0 }
+        ]
+      ]
+    },
+    "HTTP Request (Web Scraper)": {
+      "output": [
+        [
+          { "node": "Google Sheet Append", "index": 0 }
+        ]
+      ]
+    }
+  }
+}
+
