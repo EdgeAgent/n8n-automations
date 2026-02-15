@@ -1,0 +1,174 @@
+{
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "days",
+              "interval": 1
+            }
+          ]
+        }
+      },
+      "name": "Daily Trigger",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1,
+      "position": [100, 300]
+    },
+    {
+      "parameters": {
+        "model": "sonar-reasoning",
+        "prompt": "Find recent surplus funds lists or tax deed auction results for Florida counties (e.g., Miami-Dade, Broward, Palm Beach). List the property address, sale date, and estimated surplus amount."
+      },
+      "name": "Find Leads (Perplexity)",
+      "type": "n8n-nodes-langchain.perplexity",
+      "typeVersion": 1,
+      "position": [300, 300]
+    },
+    {
+      "parameters": {
+        "model": "deepseek/deepseek-r1",
+        "prompt": "Extract the property details, sale dates, and surplus amounts from the following text into a structured JSON list: {{ $json.message.content }}"
+      },
+      "name": "Parse Leads (DeepSeek)",
+      "type": "n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [500, 300]
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "leads",
+        "options": {}
+      },
+      "name": "Split Leads",
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [700, 300]
+    },
+    {
+      "parameters": {
+        "model": "sonar-reasoning",
+        "prompt": "Verify the previous owner and rightful claimant for the property at {{ $json.address }}. Check deed records and confirm if there are any outstanding liens that would affect the surplus claim."
+      },
+      "name": "Verify Claim (Perplexity)",
+      "type": "n8n-nodes-langchain.perplexity",
+      "typeVersion": 1,
+      "position": [900, 200]
+    },
+    {
+      "parameters": {
+        "model": "deepseek/deepseek-chat",
+        "prompt": "Based on the research: {{ $json.message.content }}, is this a valid claim? If yes, generate a personalized outreach SMS and Email for the claimant. Include the surplus amount of ${{ $node[\"Split Leads\"].json.amount }}."
+      },
+      "name": "Generate Outreach (DeepSeek)",
+      "type": "n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [1100, 200]
+    },
+    {
+      "parameters": {
+        "resource": "message",
+        "from": "YOUR_TWILIO_NUMBER",
+        "to": "={{ $node[\"Split Leads\"].json.phone }}",
+        "message": "={{ $json.sms_body }}"
+      },
+      "name": "Send SMS (Twilio)",
+      "type": "n8n-nodes-base.twilio",
+      "typeVersion": 1,
+      "position": [1300, 100]
+    },
+    {
+      "parameters": {
+        "resource": "message",
+        "subject": "Important: Surplus Funds Recovery for {{ $node[\"Split Leads\"].json.address }}",
+        "email": "={{ $node[\"Split Leads\"].json.email }}",
+        "message": "={{ $json.email_body }}"
+      },
+      "name": "Send Email (Gmail)",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2,
+      "position": [1300, 300]
+    },
+    {
+      "parameters": {
+        "model": "deepseek/deepseek-r1",
+        "prompt": "Create a detailed Recovery Report for the claimant at {{ $node[\"Split Leads\"].json.address }}. Explain the foreclosure, the ${{ $node[\"Split Leads\"].json.amount }} surplus, and our 20% success fee model. No upfront fees."
+      },
+      "name": "Closing Report (DeepSeek)",
+      "type": "n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [1500, 200]
+    }
+  ],
+  "connections": {
+    "Daily Trigger": {
+      "main": [
+        [
+          {
+            "node": "Find Leads (Perplexity)",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Find Leads (Perplexity)": {
+      "main": [
+        [
+          {
+            "node": "Parse Leads (DeepSeek)",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parse Leads (DeepSeek)": {
+      "main": [
+        [
+          {
+            "node": "Split Leads",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Leads": {
+      "main": [
+        [
+          {
+            "node": "Verify Claim (Perplexity)",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Verify Claim (Perplexity)": {
+      "main": [
+        [
+          {
+            "node": "Generate Outreach (DeepSeek)",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generate Outreach (DeepSeek)": {
+      "main": [
+        [
+          {
+            "node": "Send SMS (Twilio)",
+            "index": 0
+          },
+          {
+            "node": "Send Email (Gmail)",
+            "index": 0
+          },
+          {
+            "node": "Closing Report (DeepSeek)",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  }
+}
