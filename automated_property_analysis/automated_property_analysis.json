@@ -1,0 +1,152 @@
+{
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "days",
+              "interval": 1
+            }
+          ]
+        }
+      },
+      "name": "Schedule Trigger",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1,
+      "position": [
+        100,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "url": "https://api.example.com/property-data",
+        "responseFormat": "json",
+        "options": {}
+      },
+      "name": "Fetch Property Data",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 1,
+      "position": [
+        300,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const purchasePrice = $json[\"purchase_price\"];\nconst estimatedRent = $json[\"estimated_rent\"];\nconst expenses = $json[\"expenses\"];\n\nconst monthlyCashFlow = estimatedRent - expenses;\nconst annualCashFlow = monthlyCashFlow * 12;\nconst roi = (annualCashFlow / purchasePrice) * 100;\n\nreturn {\n  ...$json,\n  monthly_cash_flow: monthlyCashFlow,\n  annual_cash_flow: annualCashFlow,\n  roi: roi\n};"
+      },
+      "name": "Calculate Financial Metrics",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 1,
+      "position": [
+        500,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const roi = $json[\"roi\"];\nlet score = 0;\n\nif (roi > 15) {\n  score = 90;\n} else if (roi > 10) {\n  score = 75;\n} else if (roi > 5) {\n  score = 50;\n} else {\n  score = 20;\n}\n\nreturn {\n  ...$json,\n  deal_score: score\n};"
+      },
+      "name": "Assign Deal Score",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 1,
+      "position": [
+        700,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "model": "gpt-4",
+        "prompt": "Generate a concise investment analysis report for the following property: {{ $json[\"property_data\"] }}. Include key metrics like ROI and the deal score.",
+        "options": {}
+      },
+      "name": "Generate Analysis Report",
+      "type": "n8n-nodes-base.openAi",
+      "typeVersion": 1,
+      "position": [
+        900,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "fromEmail": "investor@example.com",
+        "toEmail": "investor@example.com",
+        "subject": "New Property Analysis Report",
+        "text": "={{ $json[\"report_content\"] }}",
+        "options": {}
+      },
+      "name": "Send Analysis Report",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 1,
+      "position": [
+        1100,
+        300
+      ]
+    }
+  ],
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Fetch Property Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch Property Data": {
+      "main": [
+        [
+          {
+            "node": "Calculate Financial Metrics",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Calculate Financial Metrics": {
+      "main": [
+        [
+          {
+            "node": "Assign Deal Score",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Assign Deal Score": {
+      "main": [
+        [
+          {
+            "node": "Generate Analysis Report",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generate Analysis Report": {
+      "main": [
+        [
+          {
+            "node": "Send Analysis Report",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "id": "automated_property_analysis",
+  "active": false,
+  "settings": {},
+  "version": 1
+}

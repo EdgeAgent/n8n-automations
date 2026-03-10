@@ -1,0 +1,162 @@
+{
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "days",
+              "interval": 1
+            }
+          ]
+        }
+      },
+      "name": "Schedule Trigger",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1,
+      "position": [
+        100,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "url": "https://example.com/real-estate-listings",
+        "responseFormat": "string",
+        "options": {}
+      },
+      "name": "Scrape Property Listings",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 1,
+      "position": [
+        300,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "model": "gpt-4",
+        "prompt": "Qualify this real estate lead based on the following data: {{ $json[\"data\"] }}. Provide a lead score from 0 to 100 and a justification.",
+        "options": {}
+      },
+      "name": "AI Lead Qualification",
+      "type": "n8n-nodes-base.openAi",
+      "typeVersion": 1,
+      "position": [
+        500,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "number": [
+            {
+              "value1": "={{ $json[\"lead_score\"] }}",
+              "operation": "larger",
+              "value2": 70
+            }
+          ]
+        }
+      },
+      "name": "Filter High-Value Leads",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        700,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "model": "gpt-4",
+        "prompt": "Generate a personalized outreach email for this qualified real estate lead: {{ $json[\"lead_data\"] }}.",
+        "options": {}
+      },
+      "name": "Generate Personalized Email",
+      "type": "n8n-nodes-base.openAi",
+      "typeVersion": 1,
+      "position": [
+        900,
+        200
+      ]
+    },
+    {
+      "parameters": {
+        "fromEmail": "investor@example.com",
+        "toEmail": "={{ $json[\"owner_email\"] }}",
+        "subject": "Inquiry regarding your property",
+        "text": "={{ $json[\"email_content\"] }}",
+        "options": {}
+      },
+      "name": "Send Outreach Email",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 1,
+      "position": [
+        1100,
+        200
+      ]
+    }
+  ],
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Scrape Property Listings",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Scrape Property Listings": {
+      "main": [
+        [
+          {
+            "node": "AI Lead Qualification",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Lead Qualification": {
+      "main": [
+        [
+          {
+            "node": "Filter High-Value Leads",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter High-Value Leads": {
+      "main": [
+        [
+          {
+            "node": "Generate Personalized Email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generate Personalized Email": {
+      "main": [
+        [
+          {
+            "node": "Send Outreach Email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "id": "ai_powered_lead_qualification",
+  "active": false,
+  "settings": {},
+  "version": 1
+}

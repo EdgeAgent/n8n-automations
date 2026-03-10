@@ -1,0 +1,135 @@
+{
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "days",
+              "interval": 1
+            }
+          ]
+        }
+      },
+      "name": "Daily Trigger",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1,
+      "position": [100, 300]
+    },
+    {
+      "parameters": {
+        "model": "sonar-reasoning",
+        "prompt": "Find recent surplus funds lists or tax deed auction results for high-value Florida counties. Focus on properties with surplus amounts over $50,000. List the property address, sale date, and estimated surplus amount."
+      },
+      "name": "Find High-Value Leads (Perplexity)",
+      "type": "n8n-nodes-langchain.perplexity",
+      "typeVersion": 1,
+      "position": [300, 300]
+    },
+    {
+      "parameters": {
+        "model": "deepseek/deepseek-r1",
+        "prompt": "Extract the property details, sale dates, and surplus amounts from the following text into a structured JSON list: {{ $json.message.content }}. Only include leads with surplus > $50k."
+      },
+      "name": "Parse Leads (DeepSeek)",
+      "type": "n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [500, 300]
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "leads",
+        "options": {}
+      },
+      "name": "Split Leads",
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [700, 300]
+    },
+    {
+      "parameters": {
+        "model": "sonar-reasoning",
+        "prompt": "Conduct a deep search for the previous owner of {{ $json.address }}. Find current contact information (phone, email, current mailing address) and check for any secondary liens or bankruptcy filings that might complicate the claim."
+      },
+      "name": "Deep Verification (Perplexity)",
+      "type": "n8n-nodes-langchain.perplexity",
+      "typeVersion": 1,
+      "position": [900, 200]
+    },
+    {
+      "parameters": {
+        "model": "deepseek/deepseek-chat",
+        "prompt": "Analyze the verification data: {{ $json.message.content }}. Create a 'Claim Probability Score' (0-100). If score > 80, generate a high-urgency personalized outreach sequence including a custom SMS, a formal Email, and a script for a follow-up phone call. Mention the specific surplus of ${{ $node[\"Split Leads\"].json.amount }}."
+      },
+      "name": "Dynamic Outreach Gen (DeepSeek)",
+      "type": "n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [1100, 200]
+    },
+    {
+      "parameters": {
+        "resource": "message",
+        "from": "YOUR_TWILIO_NUMBER",
+        "to": "={{ $json.phone_number }}",
+        "message": "={{ $json.sms_body }}"
+      },
+      "name": "Send Urgent SMS (Twilio)",
+      "type": "n8n-nodes-base.twilio",
+      "typeVersion": 1,
+      "position": [1300, 100]
+    },
+    {
+      "parameters": {
+        "resource": "message",
+        "subject": "URGENT: Recovery of Your Unclaimed Funds for {{ $node[\"Split Leads\"].json.address }}",
+        "email": "={{ $json.email_address }}",
+        "message": "={{ $json.email_body }}"
+      },
+      "name": "Send Priority Email (Gmail)",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2,
+      "position": [1300, 300]
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": "YOUR_GOOGLE_SHEET_ID",
+        "sheetName": "Active Claims",
+        "values": {
+          "Address": "={{ $node[\"Split Leads\"].json.address }}",
+          "Amount": "={{ $node[\"Split Leads\"].json.amount }}",
+          "Status": "Outreach Sent",
+          "Score": "={{ $json.probability_score }}"
+        }
+      },
+      "name": "Log to CRM (Google Sheets)",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4,
+      "position": [1500, 200]
+    }
+  ],
+  "connections": {
+    "Daily Trigger": {
+      "main": [[{ "node": "Find High-Value Leads (Perplexity)", "type": "main", "index": 0 }]]
+    },
+    "Find High-Value Leads (Perplexity)": {
+      "main": [[{ "node": "Parse Leads (DeepSeek)", "type": "main", "index": 0 }]]
+    },
+    "Parse Leads (DeepSeek)": {
+      "main": [[{ "node": "Split Leads", "type": "main", "index": 0 }]]
+    },
+    "Split Leads": {
+      "main": [[{ "node": "Deep Verification (Perplexity)", "type": "main", "index": 0 }]]
+    },
+    "Deep Verification (Perplexity)": {
+      "main": [[{ "node": "Dynamic Outreach Gen (DeepSeek)", "type": "main", "index": 0 }]]
+    },
+    "Dynamic Outreach Gen (DeepSeek)": {
+      "main": [
+        [{ "node": "Send Urgent SMS (Twilio)", "type": "main", "index": 0 }],
+        [{ "node": "Send Priority Email (Gmail)", "type": "main", "index": 0 }],
+        [{ "node": "Log to CRM (Google Sheets)", "type": "main", "index": 0 }]
+      ]
+    }
+  }
+}
