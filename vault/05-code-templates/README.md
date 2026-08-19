@@ -1059,3 +1059,11 @@
 - **Snippet #299**: Production-ready code block for business code templates [Item ID: COD-0299]
 - **Snippet #300**: Production-ready code block for business code templates [Item ID: COD-0300]
 
+
+## Gumroad API Integration (New)
+
+- **Gumroad OAuth 2.0 Handler**: Architectural blueprint for managing secure OAuth flows and token persistence.
+- **Automated Product Sync**: Python script for bi-directional synchronization of product metadata and pricing.
+- **Sales Webhook Listener**: Node.js implementation for real-time processing of Gumroad 'Ping' notifications.
+- **Subscriber Management API**: Advanced logic for retrieving, filtering, and segmenting active product subscribers.
+- **License Verification Logic**: Secure fulfillment protocol for validating license keys and granting digital access.

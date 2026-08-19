@@ -1,0 +1,136 @@
+{
+  "name": "Gumroad Sales & Subscriber Sync",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "gumroad-webhook",
+        "options": {}
+      },
+      "name": "Gumroad Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        250,
+        300
+      ],
+      "webhookId": "gumroad-webhook"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{$json[\"resource_name\"]}}",
+              "value2": "sale"
+            }
+          ]
+        }
+      },
+      "name": "Is Sale?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        450,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "method": "GET",
+        "url": "=https://api.gumroad.com/v2/sales/{{$node[\"Gumroad Webhook\"].json[\"sale_id\"]}}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "options": {}
+      },
+      "name": "Get Sale Details",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 1,
+      "position": [
+        650,
+        200
+      ],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "gumroad-api-token",
+          "name": "Gumroad API Token"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "sheetId": "YOUR_SHEET_ID",
+        "range": "Sales!A:Z",
+        "options": {}
+      },
+      "name": "Log to Google Sheets",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 1,
+      "position": [
+        850,
+        200
+      ]
+    },
+    {
+      "parameters": {
+        "channel": "sales-notifications",
+        "text": "=🚀 New Gumroad Sale! \nProduct: {{$node[\"Get Sale Details\"].json[\"sale\"][\"product_name\"]}}\nCustomer: {{$node[\"Get Sale Details\"].json[\"sale\"][\"email\"]}}\nAmount: {{$node[\"Get Sale Details\"].json[\"sale\"][\"price\"] / 100}} {{$node[\"Get Sale Details\"].json[\"sale\"][\"currency\"]}}",
+        "options": {}
+      },
+      "name": "Notify Slack",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 1,
+      "position": [
+        1050,
+        200
+      ]
+    }
+  ],
+  "connections": {
+    "Gumroad Webhook": {
+      "main": [
+        [
+          {
+            "node": "Is Sale?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Is Sale?": {
+      "main": [
+        [
+          {
+            "node": "Get Sale Details",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Sale Details": {
+      "main": [
+        [
+          {
+            "node": "Log to Google Sheets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Log to Google Sheets": {
+      "main": [
+        [
+          {
+            "node": "Notify Slack",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  }
+}

@@ -104,6 +104,7 @@ The contract is deliberately small. That makes it easy to pass into an AI agent,
 ├── ai_powered_lead_qualification/   # Agent-led qualification workflow
 ├── web_scraper_to_google_sheet/     # Scrape and persist structured leads
 ├── real_estate_investor_engine/     # Python research engine
+├── gumroad_integration/             # Gumroad sales & subscriber sync
 ├── assets/                          # Original project visuals
 ├── create_markdown_files.py         # Workflow documentation helper
 └── README.md
