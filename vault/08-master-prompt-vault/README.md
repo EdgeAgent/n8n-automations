@@ -1,23 +1,22 @@
 # Vault Category 8 — Master Prompt Vault (1,500+ items)
 
-> Universal prompts, Claude-optimized XML structures, and targeted niche prompt collections.
+> Universal prompts, Claude-optimized XML structures, and niche prompt collections.
 > — **EDGE | AGENCY**
 
-## Overview
+## 8.1 Universal Prompts (500+)
+- Advanced Technical Writing & Editing Prompts
+- Deep Data Analysis & Statistical Synthesis Prompts
+- Full-Stack Code Generation & Debugging Prompts
+- Academic & Industry Research Synthesis Prompts
+- Creative Ideation & Brand Strategy Prompts
+- Executive Business Planning & Strategy Prompts
 
-This section of the mega-vault provides structured, high-density assets tailored for professional execution. Every template and framework within this repository is optimized for modern LLM interfaces and automation platforms.
+## 8.2 Claude-Optimized Prompts (500+)
+- XML-Structured Agent Prompt Templates
+- Tool-Use & Function Calling Schema Templates
+- Multi-Step Chain-of-Thought Prompt Blueprints
+- Complex Document Parsing & Extraction Prompts
+- Automated Code Refactoring & Architecture Prompts
 
-## Key Sub-Components
-
-| Component | Item Count | Description |
-| :--- | :--- | :--- |
-| **Core Assets** | 500+ | Primary execution templates and baseline instructions. |
-| **Advanced Packs** | 500+ | Specialized vertical-specific workflows and code snippets. |
-| **Enterprise Extensions** | 500+ | Scalable configurations for multi-agent systems and APIs. |
-
-## Implementation Guidelines
-
-Operators should deploy these assets by referencing the corresponding XML schema or automation JSON file. Ensure all environment variables and API keys are securely configured prior to production execution.
-
----
-*Powered by EDGE | AGENCY & Manus AI*
+## 8.3 Niche Prompts (500+)
+- Targeted prompt collections across all 67 supported industries.

@@ -1,23 +1,27 @@
 # Vault Category 4 — Frameworks (1,000+ items)
 
-> Advanced Claude agent architectures, business growth frameworks, and chain-of-thought reasoning models.
+> Advanced Claude agent architectures and business growth frameworks.
 > — **EDGE | AGENCY**
 
-## Overview
+## 4.1 Claude Agent Frameworks (200+)
+- Autonomous Deep Research Agent Architecture
+- Full-Stack Code Generation & Testing Agent
+- Hyper-Local SEO & Content Generation Agent
+- Automated Competitor Intelligence Crawler
+- Client Onboarding & Verification Agent
+- Omnichannel CRM Data Management Agent
+- AI Customer Support & Escalation Agent
 
-This section of the mega-vault provides structured, high-density assets tailored for professional execution. Every template and framework within this repository is optimized for modern LLM interfaces and automation platforms.
+## 4.2 Business Frameworks (300+)
+- Exponential Growth Scaling Model
+- Value Proposition Canvas & Product-Market Fit Engine
+- Multi-Channel Acquisition Funnel Framework
+- Lean Operations & Overhead Reduction Matrix
+- Transformational Leadership & Delegation Framework
 
-## Key Sub-Components
-
-| Component | Item Count | Description |
-| :--- | :--- | :--- |
-| **Core Assets** | 500+ | Primary execution templates and baseline instructions. |
-| **Advanced Packs** | 500+ | Specialized vertical-specific workflows and code snippets. |
-| **Enterprise Extensions** | 500+ | Scalable configurations for multi-agent systems and APIs. |
-
-## Implementation Guidelines
-
-Operators should deploy these assets by referencing the corresponding XML schema or automation JSON file. Ensure all environment variables and API keys are securely configured prior to production execution.
-
----
-*Powered by EDGE | AGENCY & Manus AI*
+## 4.3 AI Frameworks (500+)
+- Advanced Prompt Engineering Taxonomy
+- Chain-of-Thought (CoT) Verification Protocol
+- Tool-Use & API Function Calling Architecture
+- Multi-Step Agentic Orchestration Framework
+- Context Window Optimization & Memory Management

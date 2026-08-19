@@ -1,23 +1,24 @@
 # Vault Category 5 — Code Templates (1,000+ items)
 
-> Production-ready Python, TypeScript, and Node.js code snippets for Claude API integration and automation nodes.
+> Production-ready Python, TypeScript, and automation code snippets.
 > — **EDGE | AGENCY**
 
-## Overview
+## 5.1 Claude API Templates (300+)
+- Python Async Claude API Client with Structured JSON Output
+- TypeScript Express API Router for Multi-Tool Agents
+- Node.js Serverless Function for LLM-Powered Summarization
+- Go Multi-Threaded Batch Processing Script for Anthropic API
+- Advanced Error Handling and Rate Limiting Middleware
 
-This section of the mega-vault provides structured, high-density assets tailored for professional execution. Every template and framework within this repository is optimized for modern LLM interfaces and automation platforms.
+## 5.2 Automation Code Templates (400+)
+- n8n Custom Code Node for Data Normalization
+- Secure Webhook Verification & Payload Router
+- CRM API Integration & Idempotent Write Handler
+- Automated Appointment Booking & Calendar Sync Script
+- Real-Time Lead Qualification Scoring Algorithm
 
-## Key Sub-Components
-
-| Component | Item Count | Description |
-| :--- | :--- | :--- |
-| **Core Assets** | 500+ | Primary execution templates and baseline instructions. |
-| **Advanced Packs** | 500+ | Specialized vertical-specific workflows and code snippets. |
-| **Enterprise Extensions** | 500+ | Scalable configurations for multi-agent systems and APIs. |
-
-## Implementation Guidelines
-
-Operators should deploy these assets by referencing the corresponding XML schema or automation JSON file. Ensure all environment variables and API keys are securely configured prior to production execution.
-
----
-*Powered by EDGE | AGENCY & Manus AI*
+## 5.3 Business Code Templates (300+)
+- Dynamic Pricing Calculator in Python/Flask
+- Real-Time KPI Dashboard Aggregator Script
+- Automated Database Backup & Cloud Storage Sync Script
+- Customer Sentiment Analysis & Reporting Pipeline

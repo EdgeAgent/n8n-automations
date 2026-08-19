@@ -1,23 +1,31 @@
 # Vault Category 2 — Templates (1,500+ items)
 
-> Comprehensive collection of business plans, Claude XML agent templates, and n8n/Zapier automation templates.
+> Comprehensive business, AI, and automation templates.
 > — **EDGE | AGENCY**
 
-## Overview
+## 2.1 Business Templates (300+)
+- Executive Business Plan Outline & Financial Model
+- 10-Slide Venture Capital Pitch Deck Template
+- Comprehensive SWOT & Competitor Matrix
+- Value-Based Pricing Calculator & Tier Sheet
+- Customer Avatar & Buyer Persona Framework
+- High-Converting Sales Funnel Wireframe
+- Operations Standard Operating Procedure (SOP) Template
+- Employee Onboarding & Training Handbook
+- Quarterly OKR & KPI Tracking Dashboard
 
-This section of the mega-vault provides structured, high-density assets tailored for professional execution. Every template and framework within this repository is optimized for modern LLM interfaces and automation platforms.
+## 2.2 AI Templates (400+)
+- Claude XML Structured System Prompt Template
+- Multi-Agent Orchestration Schema
+- Chain-of-Thought Reasoning Blueprint
+- Automated Research Synthesis Template
+- Code Review & Refactoring Prompt Template
+- Automated Summarization & Extraction Schema
 
-## Key Sub-Components
-
-| Component | Item Count | Description |
-| :--- | :--- | :--- |
-| **Core Assets** | 500+ | Primary execution templates and baseline instructions. |
-| **Advanced Packs** | 500+ | Specialized vertical-specific workflows and code snippets. |
-| **Enterprise Extensions** | 500+ | Scalable configurations for multi-agent systems and APIs. |
-
-## Implementation Guidelines
-
-Operators should deploy these assets by referencing the corresponding XML schema or automation JSON file. Ensure all environment variables and API keys are securely configured prior to production execution.
-
----
-*Powered by EDGE | AGENCY & Manus AI*
+## 2.3 Automation Templates (800+)
+- n8n Lead Qualification & Enrichment Pipeline
+- Zapier CRM Sync & Notification Workflow
+- Make.com Customer Support Ticket Triage Automation
+- Automated SEO Content Publishing Pipeline
+- Stripe-to-QuickBooks Financial Reconciliation Workflow
+- Google Sheets to Trello Task Dispatcher
