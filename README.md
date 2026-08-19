@@ -17,6 +17,14 @@
 
 > **One endpoint. Zero parser drama.** Wire live search into an n8n HTTP Request node and keep your downstream workflow focused on qualification, enrichment, and action.
 
+## 🏛️ The 10,000-Item Mega-Vault
+
+This repository now features **The 10,000-Item Mega-Vault**, a massive, structured, niche-spanning resource library containing prompt libraries, business templates, niche startup checklists, Claude agent frameworks, code templates, automation blueprints, and niche packs [1]. 
+
+👉 **[Explore the Mega-Vault Master Index](./MEGA_VAULT.md)**
+
+---
+
 ## Why this repo exists
 
 Most lead-generation automations lose time at the boundary between search and orchestration. Providers return different shapes, nodes change names, and every new workflow grows another custom parser. EDGE / SEARCHER gives the workflow a stable contract: a `query` string and a `results[]` array where every result contains `title`, `url`, and `content`.
@@ -119,6 +127,10 @@ Do not commit API secrets or provider credentials. Store them in the deployment 
 ## Contributing
 
 Contributions are welcome when they make the workflows easier to import, safer to operate, or more useful in a real agency pipeline. Keep workflow exports paired with human-readable documentation, avoid hardcoded secrets, and prefer idempotent writes for every external side effect.
+
+## References
+
+[1] EDGE | AGENCY. *The 10,000-Item Mega-Vault Architecture Guide*. 2026.
 
 ## License
 
