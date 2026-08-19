@@ -17,6 +17,10 @@
 
 > **One endpoint. Zero parser drama.** Wire live search into an n8n HTTP Request node and keep your downstream workflow focused on qualification, enrichment, and action.
 
+## 🚀 Enterprise Deployment & Mega-Vault
+
+For step-by-step instructions on deploying the n8n automation pipelines included in this repository, please review the **[Enterprise Deployment Guide](./DEPLOYMENT_GUIDE.md)** [1].
+
 ## 🏛️ The 10,000-Item Mega-Vault
 
 This repository now features **The 10,000-Item Mega-Vault**, a massive, structured, niche-spanning resource library containing prompt libraries, business templates, niche startup checklists, Claude agent frameworks, code templates, automation blueprints, and niche packs [1]. 
