@@ -57,6 +57,10 @@ The repository pairs the public search service with a curated collection of n8n 
 
 The interface is built around a high-contrast operator palette: deep navy for focus, electric blue for action, and a luminous cyan accent for live signal. The generated visuals are original assets created for this repository and are used as product storytelling surfaces rather than stock decoration.
 
+### Product marketing asset
+
+The repository includes a ready-to-use **[Mega-Vault marketing sample](assets/marketing-sample.png)** for Gumroad, social posts, launch announcements, and partner outreach. It uses the EDGE | AGENCY electric-blue visual system and highlights the vault's AI prompts, n8n workflows, and startup blueprints.
+
 ## Quick start with n8n
 
 1. Add an **HTTP Request** node.
