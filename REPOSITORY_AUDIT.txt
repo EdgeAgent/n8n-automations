@@ -1,0 +1,16 @@
+cat07_niches=67
+cat07_names=accountants,agencies,architecture,artists,auto-detailers,bakery,barbers,bookkeepers,brewery,cafes,candle-makers,car-dealerships,chiropractors,churches,cleaning-companies,clothing-brands,construction,consultants,daycare,dentists,designers,developers,dropshipping,e-commerce,electricians,event-planners,fitness-studios,food-trucks,freelancers,gyms,hvac,influencers,interior-design,jewelry-brands,landscapers,lawyers,life-coaches,mechanics,medical-clinics,nail-techs,nonprofits,nutritionists,personal-trainers,pest-control,pet-grooming,photographers,plumbing,podcasters,print-on-demand,real-estate,restaurants,retail-stores,roofing,saas-founders,salons,security-services,solar-installers,streamers,tattoo-shops,teachers,therapists,tutors,veterinarians,videographers,wedding-planners,yoga-studios,youtubers
+cat01_prompts=2010
+cat02_templates=1550
+cat03_checklists=1005
+cat04_frameworks=1050
+cat05_code=1050
+cat06_blueprints=1000
+cat07_assets=1005
+cat08_master_prompts=1500
+total_marked_items=10170
+item_ids=6150
+duplicate_item_ids=0
+broken_local_links=0
+invalid_json_files=0
+missing_required_files=0

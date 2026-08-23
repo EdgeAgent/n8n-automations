@@ -2,7 +2,7 @@
 
 ![EDGE | AGENCY Vault Cover](assets/vault-cover.png)
 
-> "A curated collection of submission templates and directory listings to help publish and promote **The 10,110-Item Mega-Vault & n8n Automation Suite** across free GitHub resource hubs."
+> "A curated collection of submission templates and directory listings to help publish and promote **The 10,170-Item Mega-Vault & n8n Automation Suite** across free GitHub resource hubs."
 > — **EDGE | AGENCY** [1]
 
 ---
@@ -18,13 +18,13 @@ To maximize visibility and ensure the repository is easily discovered by develop
 ### A. Awesome n8n (`restyler/awesome-n8n` or `ScraperNode/awesome-n8n-templates`)
 **Markdown snippet for Pull Request / Issue submission:**
 ```markdown
-- [The 10,110-Item Mega-Vault & n8n Automations](https://github.com/EdgeAgent/n8n-automations) - A massive, structured resource library containing production-ready n8n workflows, 2,010 profession prompt packs, 67 startup checklists, Gumroad API integrations, and Claude agent frameworks.
+- [The 10,170-Item Mega-Vault & n8n Automations](https://github.com/EdgeAgent/n8n-automations) - A massive, structured resource library containing production-ready n8n workflows, 2,010 profession prompt packs, 67 startup checklists, Gumroad API integrations, and Claude agent frameworks.
 ```
 
 ### B. Awesome Workflow Automation (`dariubs/awesome-workflow-automation`)
 **Markdown snippet:**
 ```markdown
-- [EdgeAgent n8n Automations & Mega-Vault](https://github.com/EdgeAgent/n8n-automations) - Enterprise-grade n8n workflows for lead qualification, property analysis, e-commerce order processing, and Gumroad sync paired with 10,110 curated vault items.
+- [EdgeAgent n8n Automations & Mega-Vault](https://github.com/EdgeAgent/n8n-automations) - Enterprise-grade n8n workflows for lead qualification, property analysis, e-commerce order processing, and Gumroad sync paired with 10,170 curated vault items.
 ```
 
 ### C. Awesome Prompts (`ai-boost/awesome-prompts` or `f/prompts.chat`)

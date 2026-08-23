@@ -13,7 +13,7 @@ niches = [
     "clothing-brands", "jewelry-brands", "candle-makers", "print-on-demand", "nonprofits", "churches", 
     "accountants", "bookkeepers", "lawyers", "dentists", "chiropractors", "medical-clinics", 
     "tutors", "teachers", "architecture", "interior-design", "security-services", "pet-grooming", 
-    "veterinarians", "bakery", "brewery", "fitness-studios"
+    "veterinarians", "bakery", "brewery", "fitness-studios", "yoga-studios"
 ]
 
 total_items = 0
@@ -51,7 +51,7 @@ for t_cat, count in templates_data.items():
     cat2_text += f"## {t_cat} ({count} Items)\n\n"
     for i in range(1, count + 1):
         total_items += 1
-        cat2_text += f"- **{t_cat[:-1]} #{i}**: Standardized template for enterprise {t_cat.lower()} deployment [Item ID: TPL-{i:04d}]\n"
+        cat2_text += f"- **{t_cat[:-1]} #{i}**: Standardized template for enterprise {t_cat.lower()} deployment [Item ID: TPL-{total_items:04d}]\n"
     cat2_text += "\n"
 with open(os.path.join(cat2_dir, "README.md"), "w") as f:
     f.write(cat2_text)
@@ -79,7 +79,7 @@ for f_cat, count in frameworks_data.items():
     cat4_text += f"## {f_cat} ({count} Items)\n\n"
     for i in range(1, count + 1):
         total_items += 1
-        cat4_text += f"- **{f_cat[:-1]} #{i}**: Architectural framework for scalable execution [Item ID: FRW-{i:04d}]\n"
+        cat4_text += f"- **{f_cat[:-1]} #{i}**: Architectural framework for scalable execution [Item ID: FRW-{total_items:04d}]\n"
     cat4_text += "\n"
 with open(os.path.join(cat4_dir, "README.md"), "w") as f:
     f.write(cat4_text)
@@ -93,7 +93,7 @@ for c_cat, count in code_data.items():
     cat5_text += f"## {c_cat} ({count} Items)\n\n"
     for i in range(1, count + 1):
         total_items += 1
-        cat5_text += f"- **Snippet #{i}**: Production-ready code block for {c_cat.lower()} [Item ID: COD-{i:04d}]\n"
+        cat5_text += f"- **Snippet #{i}**: Production-ready code block for {c_cat.lower()} [Item ID: COD-{total_items:04d}]\n"
     cat5_text += "\n"
 with open(os.path.join(cat5_dir, "README.md"), "w") as f:
     f.write(cat5_text)
@@ -107,7 +107,7 @@ for b_cat, count in blueprint_data.items():
     cat6_text += f"## {b_cat} ({count} Items)\n\n"
     for i in range(1, count + 1):
         total_items += 1
-        cat6_text += f"- **Blueprint #{i}**: End-to-end automation workflow for {b_cat.lower()} [Item ID: BLU-{i:04d}]\n"
+        cat6_text += f"- **Blueprint #{i}**: End-to-end automation workflow for {b_cat.lower()} [Item ID: BLU-{total_items:04d}]\n"
     cat6_text += "\n"
 with open(os.path.join(cat6_dir, "README.md"), "w") as f:
     f.write(cat6_text)
@@ -135,7 +135,7 @@ for v_cat, count in vault_data.items():
     cat8_text += f"## {v_cat} ({count} Items)\n\n"
     for i in range(1, count + 1):
         total_items += 1
-        cat8_text += f"- **Prompt #{i}**: Master execution prompt for {v_cat.lower()} [Item ID: PRM-{i:04d}]\n"
+        cat8_text += f"- **Prompt #{i}**: Master execution prompt for {v_cat.lower()} [Item ID: PRM-{total_items:04d}]\n"
     cat8_text += "\n"
 with open(os.path.join(cat8_dir, "README.md"), "w") as f:
     f.write(cat8_text)
