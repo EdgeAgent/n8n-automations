@@ -21,6 +21,14 @@
 
 For step-by-step instructions on deploying the n8n automation pipelines included in this repository, please review the **[Enterprise Deployment Guide](./DEPLOYMENT_GUIDE.md)** [1].
 
+## JARVIS Neural Assistant
+
+This repository now includes **[JARVIS](./jarvis_agent/)**: a professional local-first assistant service that presents one coherent identity while routing bounded work through Executive, Research, Workspace, Operations, Memory, and Growth departments. It ships with a FastAPI contract, offline tests, an n8n-ready reply format, an interactive **[Neural Console](./jarvis_neural_console/)**, and a documented path to free local CosyVoice output on a Nitro 5.
+
+<div align="center">
+  <img src="jarvis_neural_console/assets/neural-console-preview.png" alt="JARVIS Neural Console" width="900" />
+</div>
+
 ## 🏛️ The 10,000-Item Mega-Vault
 
 This repository now features **The 10,000-Item Mega-Vault**, a massive, structured, niche-spanning resource library containing prompt libraries, business templates, niche startup checklists, Claude agent frameworks, code templates, automation blueprints, and niche packs [1]. 

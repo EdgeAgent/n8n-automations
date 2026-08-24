@@ -1,0 +1,19 @@
+# Runtime secrets and local settings
+.env
+.env.*
+!.env.example
+
+# Python environments and generated caches
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Local CosyVoice voice profiles and generated audio should stay on the Nitro 5.
+voice_profiles/
+generated_audio/
+*.wav
+*.mp3
+*.ogg
